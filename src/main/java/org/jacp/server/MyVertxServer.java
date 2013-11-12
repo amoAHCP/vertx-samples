@@ -11,6 +11,8 @@ import org.vertx.java.core.http.ServerWebSocket;
 import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.platform.Verticle;
 
+import java.util.concurrent.CountDownLatch;
+
 /**
  * Created with IntelliJ IDEA.
  * User: ady
@@ -20,6 +22,7 @@ import org.vertx.java.platform.Verticle;
  */
 public class MyVertxServer extends Verticle {
     private WebSocketRepository repository = new WebSocketRepository();
+    public static CountDownLatch latch = new CountDownLatch(1) ;
     @Override
     public void start() {
         System.out.println("This vertex: "+this+"  Thread: "+Thread.currentThread());
@@ -55,13 +58,14 @@ public class MyVertxServer extends Verticle {
 
                     @Override
                     public void handle(Buffer data) {
-                        System.out.println("data handler:"+data);
+                        System.out.println("data handler:" + data);
                         String name = data.toString().split(":")[0];
                         String message = data.toString().split(":")[1];
                         JsonObject messageObject = new JsonObject();
                         messageObject.putString("name", name);
                         messageObject.putString("message", message);
                         vertx.eventBus().send("de.mz.chat", messageObject);
+                        ws.writeTextFrame("OK");
                     }
                 });
                 ws.closeHandler(new Handler<Void>() {
