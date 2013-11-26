@@ -22,33 +22,59 @@ public class VertexChatServer extends Verticle {
 
     @Override
     public void start() {
-        HttpServer httpServer = startServer();
+        final HttpServer httpServer = startServer();
         registerEventBusMessageHandler();
+        registerWebsocketHandler(httpServer);
+        httpServer.listen(8080);
     }
 
     private HttpServer startServer() {
         HttpServer httpServer = vertx.createHttpServer();
-        httpServer.listen(8080);
+
         return httpServer;
     }
 
     private void registerEventBusMessageHandler() {
-        vertx.eventBus().registerHandler("org.jacp.message", (Handler<Message<JsonObject>>) (message) -> {
-            final String name = message.body().getString("name");
-            final String body = message.body().getString("body");
-            final String wsMessage = name.concat(":").concat(body);
-            repository.getWebSockets().parallelStream().forEach(ws->ws.writeTextFrame(wsMessage));
-        });
+        vertx.eventBus().registerHandler("org.jacp.message",(message) -> handleWSMessagesFromBus(message));
     }
 
-    private void registerWebsocketHandler(HttpServer httpServer) {
-            httpServer.websocketHandler((Handler<ServerWebSocket>)(serverSocket)->{
+    /**
+     * Handle redirected messages from WebSocket.
+     * @param message
+     */
+    private void handleWSMessagesFromBus(final Message<JsonObject> message) {
+        final String name = message.body().getString("name");
+        final String body = message.body().getString("message");
+        final String wsMessage = name.concat(":").concat(body);
+        repository.getWebSockets().parallelStream().forEach(ws->ws.writeTextFrame(wsMessage));
+    }
+
+    /**
+     * Registers onMessage and onClose message handler for WebSockets
+     * @param httpServer
+     */
+    private void registerWebsocketHandler(final HttpServer httpServer) {
+            httpServer.websocketHandler((serverSocket)->{
                 repository.addWebSocket(serverSocket);
-                serverSocket.dataHandler((data)->handleMessage(data))  ;
+                serverSocket.dataHandler((data)->redirectWSMessageToBus(data)) ;
+                serverSocket.closeHandler((close)->handleConnectionClose(close));
             })  ;
     }
 
-    private void handleMessage(Buffer data) {
+    /**
+     * handles connection close
+     * @param event
+     */
+    private void handleConnectionClose(final Void event) {
+
+    }
+
+    /**
+     * handles websocket messages and redirect to message bus
+     * @param data
+     */
+    private void redirectWSMessageToBus(final Buffer data) {
+        System.out.println(data.toString());
         String name = data.toString().split(":")[0];
         String message = data.toString().split(":")[1];
         JsonObject messageObject = new JsonObject();
