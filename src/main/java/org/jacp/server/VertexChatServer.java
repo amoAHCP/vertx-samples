@@ -1,5 +1,8 @@
 package org.jacp.server;
 
+import org.jacp.dto.ChatMessage;
+import org.jacp.util.MessageUtil;
+import org.jacp.util.Serializer;
 import org.jacp.ws.WebSocketRepository;
 import org.vertx.java.core.Handler;
 import org.vertx.java.core.buffer.Buffer;
@@ -42,11 +45,10 @@ public class VertexChatServer extends Verticle {
      * Handle redirected messages from WebSocket.
      * @param message
      */
-    private void handleWSMessagesFromBus(final Message<JsonObject> message) {
-        final String name = message.body().getString("name");
-        final String body = message.body().getString("message");
-        final String wsMessage = name.concat(":").concat(body);
-        repository.getWebSockets().parallelStream().forEach(ws->ws.writeTextFrame(wsMessage));
+    private void handleWSMessagesFromBus(final Message<byte[]> message) {
+        Buffer buffer = new Buffer();
+        buffer.appendBytes(message.body());
+        repository.getWebSockets().parallelStream().forEach(ws->ws.writeBinaryFrame(buffer));
     }
 
     /**
@@ -57,7 +59,7 @@ public class VertexChatServer extends Verticle {
             httpServer.websocketHandler((serverSocket)->{
                 repository.addWebSocket(serverSocket);
                 serverSocket.dataHandler((data)->redirectWSMessageToBus(data)) ;
-                serverSocket.closeHandler((close)->handleConnectionClose(close));
+                serverSocket.closeHandler((close)->handleConnectionClose(close,serverSocket));
             })  ;
     }
 
@@ -65,8 +67,8 @@ public class VertexChatServer extends Verticle {
      * handles connection close
      * @param event
      */
-    private void handleConnectionClose(final Void event) {
-
+    private void handleConnectionClose(final Void event, ServerWebSocket socket) {
+        repository.removeWebSocket(socket);
     }
 
     /**
@@ -74,12 +76,6 @@ public class VertexChatServer extends Verticle {
      * @param data
      */
     private void redirectWSMessageToBus(final Buffer data) {
-        System.out.println(data.toString());
-        String name = data.toString().split(":")[0];
-        String message = data.toString().split(":")[1];
-        JsonObject messageObject = new JsonObject();
-        messageObject.putString("name", name);
-        messageObject.putString("message", message);
-        vertx.eventBus().send("org.jacp.message", messageObject);
+        vertx.eventBus().send("org.jacp.message", data.getBytes());
     }
 }

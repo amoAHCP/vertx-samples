@@ -1,6 +1,9 @@
 package org.jacp.ws;
 
+import org.jacp.dto.ChatMessage;
 import org.jacp.server.MyVertxServer;
+import org.jacp.util.MessageUtil;
+import org.jacp.util.Serializer;
 import org.junit.Before;
 import org.junit.Test;
 import org.vertx.java.core.Handler;
@@ -10,6 +13,7 @@ import org.vertx.java.core.buffer.Buffer;
 import org.vertx.java.core.http.HttpClient;
 import org.vertx.java.core.http.WebSocket;
 
+import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 
 import static junit.framework.Assert.assertNotNull;
@@ -30,7 +34,7 @@ public class SimpleVertesWSConnectionTest {
     }
 
     @Test
-    public void simpleConnect() throws InterruptedException {
+    public void simpleConnect() throws InterruptedException, IOException {
         CountDownLatch latch = new CountDownLatch(1);
         CountDownLatch latch2 = new CountDownLatch(1);
         HttpClient client = vertx.createHttpClient().setHost("localhost").setPort(8080);
@@ -42,7 +46,16 @@ public class SimpleVertesWSConnectionTest {
                 latch.countDown();
                 wsTemp[0]= ws;
                 ws.dataHandler((data)->{
-                    System.out.println("client data handler:" + data);
+
+                    ChatMessage messageObject= null;
+                    try {
+                        messageObject = MessageUtil.getMessage(data.getBytes(), ChatMessage.class);
+                    } catch (IOException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    System.out.println("client data handler:" + messageObject.getMessage());
                     latch2.countDown();
                 });
 
@@ -51,9 +64,12 @@ public class SimpleVertesWSConnectionTest {
         latch.await();
 
         assertNotNull(wsTemp[0]);
+
+        ChatMessage message = new ChatMessage("me","you","hello world");
+
         Buffer buffer = new Buffer();
-        buffer.appendString("andy:myMessage");
-        wsTemp[0].writeTextFrame("aaa:BBB");
+        buffer.appendBytes(Serializer.serialize(message));
+        wsTemp[0].writeBinaryFrame(buffer);
         latch2.await();
 
     }
