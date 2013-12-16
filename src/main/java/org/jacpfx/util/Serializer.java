@@ -1,8 +1,8 @@
-package org.jacp.util;
+package org.jacpfx.util;
 
 /**
  * Created with IntelliJ IDEA.
- * User: amo
+ * User: Andy Moncsek
  * Date: 27.11.13
  * Time: 09:58
  * Serialisation / Deserialisation Helper

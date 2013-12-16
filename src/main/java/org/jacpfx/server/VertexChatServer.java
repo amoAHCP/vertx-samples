@@ -1,17 +1,11 @@
-package org.jacp.server;
+package org.jacpfx.server;
 
-import org.jacp.dto.ChatMessage;
-import org.jacp.util.MessageUtil;
-import org.jacp.util.Serializer;
-import org.jacp.ws.WebSocketRepository;
-import org.vertx.java.core.Handler;
+import org.jacpfx.ws.WebSocketRepository;
 import org.vertx.java.core.buffer.Buffer;
 import org.vertx.java.core.eventbus.Message;
 import org.vertx.java.core.http.HttpServer;
 import org.vertx.java.core.http.ServerWebSocket;
-import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.platform.Verticle;
-import sun.jvm.hotspot.interpreter.Bytecodes;
 
 /**
  * Created with IntelliJ IDEA.
@@ -38,7 +32,7 @@ public class VertexChatServer extends Verticle {
     }
 
     private void registerEventBusMessageHandler() {
-        vertx.eventBus().registerHandler("org.jacp.message",(message) -> handleWSMessagesFromBus(message));
+        vertx.eventBus().registerHandler("org.jacpfx.message",(message) -> handleWSMessagesFromBus(message));
     }
 
     /**
@@ -76,6 +70,6 @@ public class VertexChatServer extends Verticle {
      * @param data
      */
     private void redirectWSMessageToBus(final Buffer data) {
-        vertx.eventBus().send("org.jacp.message", data.getBytes());
+        vertx.eventBus().send("org.jacpfx.message", data.getBytes());
     }
 }

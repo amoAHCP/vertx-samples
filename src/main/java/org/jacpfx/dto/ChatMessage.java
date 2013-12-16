@@ -1,4 +1,4 @@
-package org.jacp.dto;
+package org.jacpfx.dto;
 
 import java.io.Serializable;
 

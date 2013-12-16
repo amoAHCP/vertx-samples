@@ -1,9 +1,8 @@
-package org.jacp.ws;
+package org.jacpfx.ws;
 
-import org.jacp.dto.ChatMessage;
-import org.jacp.server.MyVertxServer;
-import org.jacp.util.MessageUtil;
-import org.jacp.util.Serializer;
+import org.jacpfx.dto.ChatMessage;
+import org.jacpfx.util.MessageUtil;
+import org.jacpfx.util.Serializer;
 import org.junit.Before;
 import org.junit.Test;
 import org.vertx.java.core.Handler;

@@ -7,6 +7,12 @@
   <version>1.0-SNAPSHOT</version>
   <name>vertx-samples</name>
   <url>http://maven.apache.org</url>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jacp.version>2.0-ALPHA-SNAPSHOT</jacp.version>
+        <spring.version>4.0.0.RELEASE</spring.version>
+        <vertex.version>2.0.2-final</vertex.version>
+    </properties>
     <build>
         <plugins>
             <plugin>
@@ -23,26 +29,78 @@
         </plugins>
     </build>
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
       <dependency>
           <groupId>io.vertx</groupId>
           <artifactId>vertx-core</artifactId>
-          <version>2.0.2-final</version>
+          <version>${vertex.version}</version>
       </dependency>
       <dependency>
           <groupId>io.vertx</groupId>
           <artifactId>vertx-platform</artifactId>
-          <version>2.0.2-final</version>
+          <version>${vertex.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.jacpfx</groupId>
+          <artifactId>JACP.API</artifactId>
+          <version>${jacp.version}</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.jacpfx</groupId>
+          <artifactId>JACP.JavaFX</artifactId>
+          <version>${jacp.version}</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.jacpfx</groupId>
+          <artifactId>JACP.JavaFXSpring</artifactId>
+          <version>${jacp.version}</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.jacpfx</groupId>
+          <artifactId>JACP.JavaFXControls</artifactId>
+          <version>${jacp.version}</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-core</artifactId>
+          <version>${spring.version}</version>
+          <type>jar</type>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-context</artifactId>
+          <version>${spring.version}</version>
+          <type>jar</type>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-beans</artifactId>
+          <version>${spring.version}</version>
+          <type>jar</type>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-expression</artifactId>
+          <version>${spring.version}</version>
+          <type>jar</type>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>log4j</groupId>
+          <artifactId>log4j</artifactId>
+          <version>1.2.16</version>
       </dependency>
       <dependency>
           <groupId>junit</groupId>
           <artifactId>junit</artifactId>
           <version>4.9</version>
+          <scope>test</scope>
       </dependency>
 
   </dependencies>

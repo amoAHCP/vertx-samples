@@ -1,12 +1,12 @@
-package org.jacp.util;
+package org.jacpfx.util;
 
 import java.io.IOException;
 
-import static org.jacp.util.Serializer.*;
+import static org.jacpfx.util.Serializer.*;
 
 /**
  * Created with IntelliJ IDEA.
- * User: amo
+ * User: Andy Moncsek
  * Date: 27.11.13
  * Time: 10:15
  * To change this template use File | Settings | File Templates.

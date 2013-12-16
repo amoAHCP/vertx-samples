@@ -1,19 +1,19 @@
-package org.jacp.ws;
+package org.jacpfx.ws;
 
 import org.vertx.java.core.http.ServerWebSocket;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created with IntelliJ IDEA.
- * User: ady
+ * User: Andy Moncsek
  * Date: 30.10.13
  * Time: 21:27
  * To change this template use File | Settings | File Templates.
  */
 public class WebSocketRepository {
-    private List<ServerWebSocket> webSockets = new ArrayList<ServerWebSocket>();
+    private List<ServerWebSocket> webSockets = new CopyOnWriteArrayList<>();
 
     public void addWebSocket(ServerWebSocket webSocket) {
         webSockets.add(webSocket);
