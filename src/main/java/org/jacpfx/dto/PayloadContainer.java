@@ -1,9 +1,11 @@
 package org.jacpfx.dto;
 
+import java.io.Serializable;
+
 /**
  * Created by Andy Moncsek on 13.12.13.
  */
-public class PayloadContainer {
+public class PayloadContainer implements Serializable{
 
     private final String id;
     private final byte[] payload;

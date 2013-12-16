@@ -1,12 +1,16 @@
 package org.jacpfx.server;
 
 import org.jacpfx.dto.PayloadContainer;
+import org.jacpfx.util.MessageUtil;
+import org.jacpfx.util.Serializer;
 import org.jacpfx.ws.WebSocketRepository;
 import org.vertx.java.core.buffer.Buffer;
 import org.vertx.java.core.eventbus.Message;
 import org.vertx.java.core.http.HttpServer;
 import org.vertx.java.core.http.ServerWebSocket;
 import org.vertx.java.platform.Verticle;
+
+import java.io.IOException;
 
 /**
  * Created by Andy Moncsek on 13.12.13.
@@ -21,6 +25,7 @@ public class RemoteDrawingServer extends Verticle {
         registerEventBusMessageHandler();
         registerWebsocketHandler(httpServer);
         httpServer.listen(8080);
+        System.out.println("started");
     }
 
     private HttpServer startServer() {
@@ -37,8 +42,16 @@ public class RemoteDrawingServer extends Verticle {
      * Handle redirected messages from WebSocket.
      * @param message
      */
-    private void handleWSMessagesFromBus(final Message<PayloadContainer> message) {
-        final PayloadContainer payload = message.body();
+    private void handleWSMessagesFromBus(final Message<byte[]> message) {
+
+        PayloadContainer payload=null;
+        try {
+            payload = MessageUtil.getMessage(message.body(), PayloadContainer.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         final String sourceId = payload.getId();
         final Buffer buffer = new Buffer();
         buffer.appendBytes(payload.getPayload());
@@ -73,7 +86,12 @@ public class RemoteDrawingServer extends Verticle {
      * @param data
      */
     private void redirectWSMessageToBus(final Buffer data,String id) {
-        vertx.eventBus().send("org.jacpfx.draw.message", new PayloadContainer(id,data.getBytes()));
+
+        try {
+            vertx.eventBus().send("org.jacpfx.draw.message", Serializer.serialize(new PayloadContainer(id,data.getBytes())));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

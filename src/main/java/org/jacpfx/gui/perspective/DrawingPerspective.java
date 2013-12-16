@@ -28,7 +28,7 @@ import static org.jacpfx.rcp.components.toolBar.JACPOptionButtonOrientation.BOTT
  * @author <a href="mailto:amo.ahcp@gmail.com"> Andy Moncsek</a>
  */
 @Perspective(id = "id01", name = "drawingPerspective",
-        components = {"id001"},
+        components = {"id001","id002"},
         viewLocation = "/fxml/DrawingPerspective.fxml",
         resourceBundleLocation = "bundles.languageBundle",
         localeID = "en_US")
