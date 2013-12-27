@@ -13,7 +13,7 @@
         <spring.version>4.0.0.RELEASE</spring.version>
         <vertex.version>2.0.2-final</vertex.version>
     </properties>
-    <build>
+   <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -21,12 +21,17 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
-                    <showDeprecation>true</showDeprecation>
-                    <showWarnings>true</showWarnings>
-                    <fork>true</fork>
                 </configuration>
             </plugin>
         </plugins>
+       <pluginManagement>
+           <plugins>
+               <plugin>
+                   <artifactId>maven-compiler-plugin</artifactId>
+                   <version>3.1</version>
+               </plugin>
+           </plugins>
+       </pluginManagement>
     </build>
   <dependencies>
       <dependency>
@@ -41,27 +46,31 @@
       </dependency>
       <dependency>
           <groupId>org.jacpfx</groupId>
-          <artifactId>JACP.API</artifactId>
+          <artifactId>jacpfx.api</artifactId>
           <version>${jacp.version}</version>
-          <scope>compile</scope>
+          <scope>system</scope>
+          <systemPath>${pom.basedir}/lib/jacpfx.api-2.0-ALPHA.jar</systemPath>
       </dependency>
       <dependency>
           <groupId>org.jacpfx</groupId>
-          <artifactId>JACP.JavaFX</artifactId>
+          <artifactId>jacpfx.JavaFX</artifactId>
           <version>${jacp.version}</version>
-          <scope>compile</scope>
+          <scope>system</scope>
+          <systemPath>${pom.basedir}/lib/jacpfx.JavaFX-2.0-ALPHA.jar</systemPath>
       </dependency>
       <dependency>
           <groupId>org.jacpfx</groupId>
-          <artifactId>JACP.JavaFXSpring</artifactId>
+          <artifactId>jacpfx.JavaFXSpring</artifactId>
           <version>${jacp.version}</version>
-          <scope>compile</scope>
+          <scope>system</scope>
+          <systemPath>${pom.basedir}/lib/jacpfx.JavaFXSpring-2.0-ALPHA.jar</systemPath>
       </dependency>
       <dependency>
           <groupId>org.jacpfx</groupId>
-          <artifactId>JACP.JavaFXControls</artifactId>
+          <artifactId>jacpfx.JavaFXControls</artifactId>
           <version>${jacp.version}</version>
-          <scope>compile</scope>
+          <scope>system</scope>
+          <systemPath>${pom.basedir}/lib/jacpfx.JavaFXControls-2.0-ALPHA.jar</systemPath>
       </dependency>
       <dependency>
           <groupId>org.springframework</groupId>

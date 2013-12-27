@@ -2,7 +2,7 @@ package org.jacpfx.util;
 
 import java.io.IOException;
 
-import static org.jacpfx.util.Serializer.*;
+import static org.jacpfx.util.Serializer.deserialize;
 
 /**
  * Created with IntelliJ IDEA.

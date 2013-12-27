@@ -9,17 +9,15 @@ import org.jacpfx.api.annotations.lifecycle.PostConstruct;
 import org.jacpfx.api.annotations.lifecycle.PreDestroy;
 import org.jacpfx.api.annotations.perspective.Perspective;
 import org.jacpfx.api.message.Message;
+import org.jacpfx.gui.dialog.ConnectDialog;
 import org.jacpfx.rcp.componentLayout.FXComponentLayout;
 import org.jacpfx.rcp.componentLayout.PerspectiveLayout;
-import org.jacpfx.rcp.components.toolBar.JACPOptionButton;
-import org.jacpfx.rcp.components.toolBar.JACPToolBar;
+import org.jacpfx.rcp.components.managedDialog.ManagedDialogHandler;
 import org.jacpfx.rcp.context.JACPContext;
 import org.jacpfx.rcp.perspective.FXPerspective;
+import org.jacpfx.rcp.util.FXUtil;
 
 import java.util.ResourceBundle;
-
-import static org.jacpfx.api.util.ToolbarPosition.NORTH;
-import static org.jacpfx.rcp.components.toolBar.JACPOptionButtonOrientation.BOTTOM;
 
 /**
  * Created by Andy Moncsek on 13.12.13.
@@ -28,7 +26,7 @@ import static org.jacpfx.rcp.components.toolBar.JACPOptionButtonOrientation.BOTT
  * @author <a href="mailto:amo.ahcp@gmail.com"> Andy Moncsek</a>
  */
 @Perspective(id = "id01", name = "drawingPerspective",
-        components = {"id001","id002"},
+        components = {"id001", "id002"},
         viewLocation = "/fxml/DrawingPerspective.fxml",
         resourceBundleLocation = "bundles.languageBundle",
         localeID = "en_US")
@@ -39,11 +37,13 @@ public class DrawingPerspective implements FXPerspective {
 
     @Override
     public void handlePerspective(Message<Event, Object> message, PerspectiveLayout perspectiveLayout) {
-        GridPane.setVgrow(perspectiveLayout.getRootComponent(),
-                Priority.ALWAYS);
-        GridPane.setHgrow(perspectiveLayout.getRootComponent(),
-                Priority.ALWAYS);
-        perspectiveLayout.registerTargetLayoutComponent("vMain", perspectiveLayout.getRootComponent());
+        if (message.messageBodyEquals(FXUtil.MessageUtil.INIT)) {
+            GridPane.setVgrow(perspectiveLayout.getRootComponent(),
+                    Priority.ALWAYS);
+            GridPane.setHgrow(perspectiveLayout.getRootComponent(),
+                    Priority.ALWAYS);
+            perspectiveLayout.registerTargetLayoutComponent("vMain", perspectiveLayout.getRootComponent());
+        }
 
 
     }
@@ -67,10 +67,7 @@ public class DrawingPerspective implements FXPerspective {
      */
     public void onStartPerspective(final FXComponentLayout layout,
                                    final ResourceBundle resourceBundle) {
-
-        final JACPToolBar north = layout.getRegisteredToolBar(NORTH);
-        JACPOptionButton optionButton = new JACPOptionButton("style", layout, BOTTOM);
-        north.addOnEnd(context.getId(),optionButton);
+        startConnectDialog();
 
     }
 
@@ -83,4 +80,12 @@ public class DrawingPerspective implements FXPerspective {
         // remove toolbars and menu entries when close perspective
 
     }
+
+    private void startConnectDialog() {
+        ManagedDialogHandler<ConnectDialog> handler = context.getManagedDialogHandler(ConnectDialog.class);
+        context.showModalDialog(handler.getDialogNode());
+    }
+
+
+
 }

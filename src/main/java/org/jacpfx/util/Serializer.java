@@ -7,11 +7,8 @@ package org.jacpfx.util;
  * Time: 09:58
  * Serialisation / Deserialisation Helper
  */
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+
+import java.io.*;
 
 public class Serializer {
     public static byte[] serialize(Object obj) throws IOException {
