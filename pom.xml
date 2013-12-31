@@ -46,31 +46,23 @@
       </dependency>
       <dependency>
           <groupId>org.jacpfx</groupId>
-          <artifactId>jacpfx.api</artifactId>
+          <artifactId>jacpfx.API</artifactId>
           <version>${jacp.version}</version>
-          <scope>system</scope>
-          <systemPath>${pom.basedir}/lib/jacpfx.api-2.0-ALPHA.jar</systemPath>
       </dependency>
       <dependency>
           <groupId>org.jacpfx</groupId>
           <artifactId>jacpfx.JavaFX</artifactId>
           <version>${jacp.version}</version>
-          <scope>system</scope>
-          <systemPath>${pom.basedir}/lib/jacpfx.JavaFX-2.0-ALPHA.jar</systemPath>
       </dependency>
       <dependency>
           <groupId>org.jacpfx</groupId>
           <artifactId>jacpfx.JavaFXSpring</artifactId>
           <version>${jacp.version}</version>
-          <scope>system</scope>
-          <systemPath>${pom.basedir}/lib/jacpfx.JavaFXSpring-2.0-ALPHA.jar</systemPath>
       </dependency>
       <dependency>
           <groupId>org.jacpfx</groupId>
           <artifactId>jacpfx.JavaFXControls</artifactId>
           <version>${jacp.version}</version>
-          <scope>system</scope>
-          <systemPath>${pom.basedir}/lib/jacpfx.JavaFXControls-2.0-ALPHA.jar</systemPath>
       </dependency>
       <dependency>
           <groupId>org.springframework</groupId>
