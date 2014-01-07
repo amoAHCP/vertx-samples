@@ -38,11 +38,7 @@ public class DrawingPerspective implements FXPerspective {
     @Override
     public void handlePerspective(Message<Event, Object> message, PerspectiveLayout perspectiveLayout) {
         if (message.messageBodyEquals(FXUtil.MessageUtil.INIT)) {
-            GridPane.setVgrow(perspectiveLayout.getRootComponent(),
-                    Priority.ALWAYS);
-            GridPane.setHgrow(perspectiveLayout.getRootComponent(),
-                    Priority.ALWAYS);
-            perspectiveLayout.registerTargetLayoutComponent("vMain", perspectiveLayout.getRootComponent());
+          //...
         }
 
 
@@ -62,11 +58,18 @@ public class DrawingPerspective implements FXPerspective {
     @PostConstruct
     /**
      * @PostConstruct annotated method will be executed when component is activated.
+     * @param perspectiveLayout, allows you to access the JavaFX root node of the current perspective and to register target areas
      * @param layout, The layout object gives you access to menu bar and tool bar
      * @param resourceBundle, The resource bundle defined in Perspective annotation
      */
-    public void onStartPerspective(final FXComponentLayout layout,
+    public void onStartPerspective(final PerspectiveLayout perspectiveLayout,
+                                   final FXComponentLayout layout,
                                    final ResourceBundle resourceBundle) {
+        GridPane.setVgrow(perspectiveLayout.getRootComponent(),
+                Priority.ALWAYS);
+        GridPane.setHgrow(perspectiveLayout.getRootComponent(),
+                Priority.ALWAYS);
+        perspectiveLayout.registerTargetLayoutComponent("vMain", perspectiveLayout.getRootComponent());
         startConnectDialog();
 
     }
