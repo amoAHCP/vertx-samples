@@ -7,7 +7,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import org.jacpfx.api.annotations.workbench.Workbench;
-import org.jacpfx.api.componentLayout.IWorkbenchLayout;
+import org.jacpfx.api.componentLayout.WorkbenchLayout;
 import org.jacpfx.api.message.Message;
 import org.jacpfx.gui.main.ApplicationMain;
 import org.jacpfx.rcp.componentLayout.FXComponentLayout;
@@ -39,7 +39,7 @@ public class DrawingWorkbench implements FXWorkbench {
     }
 
     @Override
-    public void handleInitialLayout(Message<Event, Object> action, IWorkbenchLayout<Node> layout, Stage stage) {
+    public void handleInitialLayout(Message<Event, Object> action, WorkbenchLayout<Node> layout, Stage stage) {
         this.stage = stage;
         layout.setWorkbenchXYSize(1024, 768);
         layout.registerToolBars(NORTH);

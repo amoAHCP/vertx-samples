@@ -8,8 +8,9 @@ import org.jacpfx.api.annotations.lifecycle.PreDestroy;
 import org.jacpfx.api.message.Message;
 import org.jacpfx.dto.CanvasPoint;
 import org.jacpfx.dto.ConnectionProperties;
+import org.jacpfx.gui.configuration.BaseConfig;
 import org.jacpfx.rcp.component.CallbackComponent;
-import org.jacpfx.rcp.context.JACPContext;
+import org.jacpfx.rcp.context.Context;
 import org.jacpfx.util.MessageUtil;
 import org.jacpfx.util.Serializer;
 import org.vertx.java.core.Vertx;
@@ -25,11 +26,11 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Andy Moncsek on 16.12.13.
  */
-@Component(id = "id002", name = "WebSocketComponent", active = false)
+@Component(id = BaseConfig.WEBSOCKET_COMPONENT, name = "WebSocketComponent", active = false)
 public class WebSocketComponent implements CallbackComponent {
     private
     @Resource
-    JACPContext context;
+    Context context;
     private WebSocket webSocket;
     private HttpClient client;
 
@@ -68,7 +69,7 @@ public class WebSocketComponent implements CallbackComponent {
                             ws.dataHandler((data) -> {
 
                                 try {
-                                    context.send("id01.id001", MessageUtil.getMessage(data.getBytes(), CanvasPoint.class));
+                                    context.send(BaseConfig.getGlobalId(BaseConfig.DRAWING_PERSPECTIVE, BaseConfig.CANVAS_COMPONENT), MessageUtil.getMessage(data.getBytes(), CanvasPoint.class));
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 } catch (ClassNotFoundException e) {

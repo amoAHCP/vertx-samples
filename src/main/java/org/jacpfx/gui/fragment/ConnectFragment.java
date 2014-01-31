@@ -1,20 +1,20 @@
-package org.jacpfx.gui.dialog;
+package org.jacpfx.gui.fragment;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import org.jacpfx.api.annotations.Resource;
-import org.jacpfx.api.annotations.dialog.Dialog;
-import org.jacpfx.api.dialog.Scope;
+import org.jacpfx.api.annotations.fragment.Fragment;
+import org.jacpfx.api.fragment.Scope;
 import org.jacpfx.dto.ConnectionProperties;
-import org.jacpfx.rcp.context.JACPContext;
+import org.jacpfx.rcp.context.Context;
 
 /**
  * Created by Andy Moncsek on 27.12.13.
  */
-@Dialog(id = "id1001", viewLocation = "/fxml/ConnectDialog.fxml", resourceBundleLocation = "bundles.languageBundle", localeID = "en_US", scope = Scope.SINGLETON)
-public class ConnectDialog {
+@Fragment(id = "id1001", viewLocation = "/fxml/ConnectFragment.fxml", resourceBundleLocation = "bundles.languageBundle", localeID = "en_US", scope = Scope.SINGLETON)
+public class ConnectFragment {
     @Resource
-    private JACPContext context;
+    private Context context;
 
     @FXML
     private TextField connectAddress;

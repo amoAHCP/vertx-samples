@@ -4,18 +4,24 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.jacpfx.gui.configuration.BaseConfig;
 import org.jacpfx.gui.workbench.DrawingWorkbench;
 import org.jacpfx.rcp.workbench.FXWorkbench;
-import org.jacpfx.spring.launcher.AFXSpringLauncher;
+import org.jacpfx.spring.launcher.AFXSpringJavaConfigLauncher;
 
 /**
  * Created by amo on 13.12.13.
  * @author <a href="mailto:amo.ahcp@gmail.com"> Andy Moncsek</a>
  */
-public class ApplicationMain extends AFXSpringLauncher {
+public class ApplicationMain extends AFXSpringJavaConfigLauncher {
     public static final String[] STYLE_FILES = {"/styles/style_light.css", "/styles/style_dark.css"};
     public ApplicationMain() {
-        super("main.xml");
+
+    }
+
+    @Override
+    protected Class<?>[] getConfigClasses() {
+        return new Class<?>[]{BaseConfig.class};
     }
 
     /**

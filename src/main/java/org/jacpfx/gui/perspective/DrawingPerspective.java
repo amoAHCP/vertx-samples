@@ -9,11 +9,12 @@ import org.jacpfx.api.annotations.lifecycle.PostConstruct;
 import org.jacpfx.api.annotations.lifecycle.PreDestroy;
 import org.jacpfx.api.annotations.perspective.Perspective;
 import org.jacpfx.api.message.Message;
-import org.jacpfx.gui.dialog.ConnectDialog;
+import org.jacpfx.gui.configuration.BaseConfig;
+import org.jacpfx.gui.fragment.ConnectFragment;
 import org.jacpfx.rcp.componentLayout.FXComponentLayout;
 import org.jacpfx.rcp.componentLayout.PerspectiveLayout;
-import org.jacpfx.rcp.components.managedDialog.ManagedDialogHandler;
-import org.jacpfx.rcp.context.JACPContext;
+import org.jacpfx.rcp.components.managedFragment.ManagedFragmentHandler;
+import org.jacpfx.rcp.context.Context;
 import org.jacpfx.rcp.perspective.FXPerspective;
 import org.jacpfx.rcp.util.FXUtil;
 
@@ -25,7 +26,7 @@ import java.util.ResourceBundle;
  *
  * @author <a href="mailto:amo.ahcp@gmail.com"> Andy Moncsek</a>
  */
-@Perspective(id = "id01", name = "drawingPerspective",
+@Perspective(id = BaseConfig.DRAWING_PERSPECTIVE, name = "drawingPerspective",
         components = {"id001", "id002"},
         viewLocation = "/fxml/DrawingPerspective.fxml",
         resourceBundleLocation = "bundles.languageBundle",
@@ -33,7 +34,7 @@ import java.util.ResourceBundle;
 public class DrawingPerspective implements FXPerspective {
 
     @Resource
-    private JACPContext context;
+    private Context context;
 
     @Override
     public void handlePerspective(Message<Event, Object> message, PerspectiveLayout perspectiveLayout) {
@@ -85,8 +86,8 @@ public class DrawingPerspective implements FXPerspective {
     }
 
     private void startConnectDialog() {
-        ManagedDialogHandler<ConnectDialog> handler = context.getManagedDialogHandler(ConnectDialog.class);
-        context.showModalDialog(handler.getDialogNode());
+        ManagedFragmentHandler<ConnectFragment> handler = context.getManagedFragmentHandler(ConnectFragment.class);
+        context.showModalDialog(handler.getFragmentNode());
     }
 
 
