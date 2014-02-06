@@ -13,13 +13,14 @@ import org.vertx.java.platform.Verticle;
 public class RemoteDrawingServer extends Verticle {
     private WebSocketRepository repository = new WebSocketRepository();
 
+    public static Integer PORT_NUMER = 8080;
 
     @Override
     public void start() {
         final HttpServer httpServer = startServer();
         registerEventBusMessageHandler();
         registerWebsocketHandler(httpServer);
-        httpServer.listen(8080);
+        httpServer.listen(PORT_NUMER);
         System.out.println("started");
     }
 

@@ -8,13 +8,23 @@ import org.jacpfx.gui.configuration.BaseConfig;
 import org.jacpfx.gui.workbench.DrawingWorkbench;
 import org.jacpfx.rcp.workbench.FXWorkbench;
 import org.jacpfx.spring.launcher.AFXSpringJavaConfigLauncher;
+import org.vertx.java.core.Vertx;
+import org.vertx.java.platform.PlatformLocator;
+import org.vertx.java.platform.PlatformManager;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 /**
  * Created by amo on 13.12.13.
+ *
  * @author <a href="mailto:amo.ahcp@gmail.com"> Andy Moncsek</a>
  */
 public class ApplicationMain extends AFXSpringJavaConfigLauncher {
     public static final String[] STYLE_FILES = {"/styles/style_light.css", "/styles/style_dark.css"};
+
     public ApplicationMain() {
 
     }
@@ -25,14 +35,16 @@ public class ApplicationMain extends AFXSpringJavaConfigLauncher {
     }
 
     /**
-     * @param args  aa  ddd
+     * @param args aa  ddd
      */
     public static void main(final String[] args) {
         Application.launch(args);
+
+
     }
 
     @Override
-    protected Class<? extends FXWorkbench> getWorkbechClass() {
+    protected Class<? extends FXWorkbench> getWorkbenchClass() {
         return DrawingWorkbench.class;
     }
 

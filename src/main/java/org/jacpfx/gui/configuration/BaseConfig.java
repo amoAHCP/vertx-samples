@@ -14,7 +14,7 @@ public class BaseConfig {
     public static  final String DRAWING_PERSPECTIVE="id01";
     public static  final String CANVAS_COMPONENT="id001";
     public static  final String WEBSOCKET_COMPONENT="id002";
-
+    public static  final String VERTX_COMPONENT="id003";
     public static String getGlobalId(final String perspectiveId, final String componentId) {
          return perspectiveId.concat(".").concat(componentId);
     }

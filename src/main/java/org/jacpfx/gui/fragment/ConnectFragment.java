@@ -6,6 +6,7 @@ import org.jacpfx.api.annotations.Resource;
 import org.jacpfx.api.annotations.fragment.Fragment;
 import org.jacpfx.api.fragment.Scope;
 import org.jacpfx.dto.ConnectionProperties;
+import org.jacpfx.dto.FragmentNavigation;
 import org.jacpfx.rcp.context.Context;
 
 /**
@@ -29,5 +30,10 @@ public class ConnectFragment {
         if(val.length<2) return;
         context.send("id01.id002",new ConnectionProperties(val[0],val[1]));
         context.hideModalDialog();
+    }
+
+    @FXML
+    public void back() {
+       context.send(FragmentNavigation.BACK);
     }
 }

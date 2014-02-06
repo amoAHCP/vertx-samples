@@ -9,8 +9,11 @@ import org.jacpfx.api.annotations.lifecycle.PostConstruct;
 import org.jacpfx.api.annotations.lifecycle.PreDestroy;
 import org.jacpfx.api.annotations.perspective.Perspective;
 import org.jacpfx.api.message.Message;
+import org.jacpfx.dto.FragmentNavigation;
 import org.jacpfx.gui.configuration.BaseConfig;
 import org.jacpfx.gui.fragment.ConnectFragment;
+import org.jacpfx.gui.fragment.CreateFragment;
+import org.jacpfx.gui.fragment.ServerConfigFragment;
 import org.jacpfx.rcp.componentLayout.FXComponentLayout;
 import org.jacpfx.rcp.componentLayout.PerspectiveLayout;
 import org.jacpfx.rcp.components.managedFragment.ManagedFragmentHandler;
@@ -27,7 +30,10 @@ import java.util.ResourceBundle;
  * @author <a href="mailto:amo.ahcp@gmail.com"> Andy Moncsek</a>
  */
 @Perspective(id = BaseConfig.DRAWING_PERSPECTIVE, name = "drawingPerspective",
-        components = {"id001", "id002"},
+        components = {
+                BaseConfig.CANVAS_COMPONENT,
+                BaseConfig.WEBSOCKET_COMPONENT,
+                BaseConfig.VERTX_COMPONENT},
         viewLocation = "/fxml/DrawingPerspective.fxml",
         resourceBundleLocation = "bundles.languageBundle",
         localeID = "en_US")
@@ -38,8 +44,23 @@ public class DrawingPerspective implements FXPerspective {
 
     @Override
     public void handlePerspective(Message<Event, Object> message, PerspectiveLayout perspectiveLayout) {
-        if (message.messageBodyEquals(FXUtil.MessageUtil.INIT)) {
-          //...
+        if (message.isMessageBodyTypeOf(FragmentNavigation.class)) {
+            FragmentNavigation navigation = message.getTypedMessageBody(FragmentNavigation.class);
+            switch (navigation) {
+                case CONNECT:
+                    ManagedFragmentHandler<ConnectFragment> handler = context.getManagedFragmentHandler(ConnectFragment.class);
+                    context.showModalDialog(handler.getFragmentNode());
+                    break;
+                case CREATE:
+                    ManagedFragmentHandler<CreateFragment> create = context.getManagedFragmentHandler(CreateFragment.class);
+                    create.getController().init();
+                    context.showModalDialog(create.getFragmentNode());
+                    break;
+                default:
+                    ManagedFragmentHandler<ServerConfigFragment> handlerMain = context.getManagedFragmentHandler(ServerConfigFragment.class);
+                    context.showModalDialog(handlerMain.getFragmentNode());
+
+            }
         }
 
 
@@ -86,10 +107,9 @@ public class DrawingPerspective implements FXPerspective {
     }
 
     private void startConnectDialog() {
-        ManagedFragmentHandler<ConnectFragment> handler = context.getManagedFragmentHandler(ConnectFragment.class);
-        context.showModalDialog(handler.getFragmentNode());
+        ManagedFragmentHandler<ServerConfigFragment> handlerMain = context.getManagedFragmentHandler(ServerConfigFragment.class);
+        context.showModalDialog(handlerMain.getFragmentNode());
     }
-
 
 
 }

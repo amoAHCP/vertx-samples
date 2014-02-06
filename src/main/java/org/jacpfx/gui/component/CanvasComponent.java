@@ -27,7 +27,13 @@ import org.jacpfx.rcp.context.Context;
  * Created by Andy Moncsek on 16.12.13.
  * This Component contains a view with a JavaFX Canvas element.
  */
-@DeclarativeView(id = BaseConfig.CANVAS_COMPONENT, name = "CanvasComponent", active = true, resourceBundleLocation = "bundles.languageBundle", initialTargetLayoutId = "vMain", viewLocation = "/fxml/CanvasComponent.fxml")
+@DeclarativeView(id = BaseConfig.CANVAS_COMPONENT,
+        name = "CanvasComponent",
+        active = true,
+        resourceBundleLocation = "bundles.languageBundle",
+        localeID = "en_US",
+        initialTargetLayoutId = "vMain",
+        viewLocation = "/fxml/CanvasComponent.fxml")
 public class CanvasComponent implements FXComponent {
 
     @FXML
@@ -86,6 +92,7 @@ public class CanvasComponent implements FXComponent {
 
     @PreDestroy
     public void onDestroy() {
+        if(labelContainer==null || canvas==null) return;
         labelContainer.prefHeightProperty().unbind();
         labelContainer.prefWidthProperty().unbind();
         canvas.heightProperty().unbind();

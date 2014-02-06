@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import javafx.collections.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -14,19 +15,27 @@
           <Image url="@../images/connect.png" />
       </image>
     </ImageView>
-    <VBox maxHeight="+Infinity" maxWidth="+Infinity" minHeight="-Infinity" prefWidth="400.0" spacing="7.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+    <VBox maxHeight="+Infinity" maxWidth="+Infinity" minHeight="-Infinity" prefWidth="150.0" spacing="7.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="0">
       <children>
-        <Label fx:id="messageLabel" text="IP:PORT" textAlignment="LEFT" wrapText="true">
+        <Label fx:id="messageLabel" text="PORT" textAlignment="LEFT" wrapText="true">
           <font>
             <Font name="System Bold" size="13.0" />
           </font>
-        </Label><TextField fx:id="connectAddress" text="127.0.0.1:8080" />
+        </Label><ChoiceBox fx:id="ports" maxWidth="1.7976931348623157E308" xmlns:fx="http://javafx.com/fxml">
+  <items>
+    <FXCollections fx:factory="observableArrayList">
+      <String fx:value="Item 1" />
+      <String fx:value="Item 2" />
+      <String fx:value="Item 3" />
+    </FXCollections>
+  </items>
+</ChoiceBox>
       </children>
     </VBox>
     <HBox maxHeight="-Infinity" maxWidth="+Infinity" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1">
-      <children><Button mnemonicParsing="false" text="%back" onAction="#back"/>
+      <children><Button mnemonicParsing="false" onAction="#back" text="%back" />
         <Pane maxWidth="+Infinity" HBox.hgrow="ALWAYS" />
-        <Button fx:id="connectButton" cancelButton="true" minWidth="80.0" mnemonicParsing="false" onAction="#connectToServer" text="%connect" HBox.hgrow="NEVER">
+        <Button fx:id="createButton" cancelButton="true" minWidth="80.0" mnemonicParsing="false" onAction="#createServer" text="%createServer" HBox.hgrow="NEVER">
           <HBox.margin>
             <Insets />
           </HBox.margin>

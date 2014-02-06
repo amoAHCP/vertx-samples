@@ -28,9 +28,8 @@ import java.util.concurrent.TimeUnit;
  */
 @Component(id = BaseConfig.WEBSOCKET_COMPONENT, name = "WebSocketComponent", active = false)
 public class WebSocketComponent implements CallbackComponent {
-    private
     @Resource
-    Context context;
+    private Context context;
     private WebSocket webSocket;
     private HttpClient client;
 
