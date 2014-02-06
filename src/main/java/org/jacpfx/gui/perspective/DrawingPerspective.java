@@ -19,7 +19,6 @@ import org.jacpfx.rcp.componentLayout.PerspectiveLayout;
 import org.jacpfx.rcp.components.managedFragment.ManagedFragmentHandler;
 import org.jacpfx.rcp.context.Context;
 import org.jacpfx.rcp.perspective.FXPerspective;
-import org.jacpfx.rcp.util.FXUtil;
 
 import java.util.ResourceBundle;
 
@@ -56,9 +55,12 @@ public class DrawingPerspective implements FXPerspective {
                     create.getController().init();
                     context.showModalDialog(create.getFragmentNode());
                     break;
-                default:
+                case BACK:
                     ManagedFragmentHandler<ServerConfigFragment> handlerMain = context.getManagedFragmentHandler(ServerConfigFragment.class);
                     context.showModalDialog(handlerMain.getFragmentNode());
+                    break;
+                default:
+                    context.hideModalDialog();
 
             }
         }

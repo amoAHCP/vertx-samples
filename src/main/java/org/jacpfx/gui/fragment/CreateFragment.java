@@ -16,7 +16,7 @@ import org.jacpfx.rcp.context.Context;
 /**
  * Created by Andy Moncsek on 27.12.13.
  */
-@Fragment(id = "id1003",
+@Fragment(id = BaseConfig.CREATE_FRAGMENT,
         viewLocation = "/fxml/CreateFragment.fxml",
         resourceBundleLocation = "bundles.languageBundle",
         localeID = "en_US",
@@ -42,8 +42,7 @@ public class CreateFragment {
     @FXML
     public void createServer() {
         final String port = ports.getSelectionModel().getSelectedItem().toString();
-        context.send(BaseConfig.VERTX_COMPONENT,new ConnectionProperties(null,port));
-        context.hideModalDialog();
+        context.send(BaseConfig.VERTX_COMPONENT, new ConnectionProperties(null, port));
     }
 
     @FXML

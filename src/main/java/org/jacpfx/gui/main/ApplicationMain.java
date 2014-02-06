@@ -8,14 +8,6 @@ import org.jacpfx.gui.configuration.BaseConfig;
 import org.jacpfx.gui.workbench.DrawingWorkbench;
 import org.jacpfx.rcp.workbench.FXWorkbench;
 import org.jacpfx.spring.launcher.AFXSpringJavaConfigLauncher;
-import org.vertx.java.core.Vertx;
-import org.vertx.java.platform.PlatformLocator;
-import org.vertx.java.platform.PlatformManager;
-
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 
 /**
  * Created by amo on 13.12.13.

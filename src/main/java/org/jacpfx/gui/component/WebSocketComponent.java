@@ -8,6 +8,7 @@ import org.jacpfx.api.annotations.lifecycle.PreDestroy;
 import org.jacpfx.api.message.Message;
 import org.jacpfx.dto.CanvasPoint;
 import org.jacpfx.dto.ConnectionProperties;
+import org.jacpfx.dto.FragmentNavigation;
 import org.jacpfx.gui.configuration.BaseConfig;
 import org.jacpfx.rcp.component.CallbackComponent;
 import org.jacpfx.rcp.context.Context;
@@ -54,9 +55,8 @@ public class WebSocketComponent implements CallbackComponent {
     }
 
     private void connect(final String ip, final String port) throws InterruptedException {
-        CountDownLatch connected = new CountDownLatch(1);
+        final CountDownLatch connected = new CountDownLatch(1);
         final Vertx vertx = VertxFactory.newVertx();
-        System.out.println("on start: " + this + " : " + context.isActive());
         client = vertx.
                 createHttpClient().
                 setHost(ip).
@@ -65,20 +65,20 @@ public class WebSocketComponent implements CallbackComponent {
                         (ws) -> {
                             connected.countDown();
                             this.webSocket = ws;
-                            ws.dataHandler((data) -> {
-
-                                try {
-                                    context.send(BaseConfig.getGlobalId(BaseConfig.DRAWING_PERSPECTIVE, BaseConfig.CANVAS_COMPONENT), MessageUtil.getMessage(data.getBytes(), CanvasPoint.class));
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                } catch (ClassNotFoundException e) {
-                                    e.printStackTrace();
-                                }
-                            });
-
-
+                            ws.dataHandler(this::sendPixelDataToCanvas);
                         });
         connected.await(5000, TimeUnit.MILLISECONDS);
+        context.send(BaseConfig.DRAWING_PERSPECTIVE, FragmentNavigation.FINISH);
+    }
+
+    private void sendPixelDataToCanvas(Buffer data) {
+        try {
+            context.send(BaseConfig.getGlobalId(BaseConfig.DRAWING_PERSPECTIVE, BaseConfig.CANVAS_COMPONENT), MessageUtil.getMessage(data.getBytes(), CanvasPoint.class));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @PostConstruct

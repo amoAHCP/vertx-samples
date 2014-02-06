@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Andy Moncsek on 16.12.13.
  */
-public class CanvasPoint implements Serializable{
+public class CanvasPoint implements Serializable {
     private static final long serialVersionUID = -3632448279678515949L;
     private double x;
     private double y;
@@ -15,7 +15,7 @@ public class CanvasPoint implements Serializable{
 
     }
 
-    public CanvasPoint(final double x, final double y,final Type type) {
+    public CanvasPoint(final double x, final double y, final Type type) {
         this.x = x;
         this.y = y;
         this.type = type;
@@ -37,10 +37,12 @@ public class CanvasPoint implements Serializable{
         this.y = y;
     }
 
-    public Type getType() {return this.type;}
+    public Type getType() {
+        return this.type;
+    }
 
-    public enum Type{
-        BEGIN,DRAW,CLEAR
+    public enum Type {
+        BEGIN, DRAW, CLEAR
     }
 
 }

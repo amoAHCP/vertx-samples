@@ -19,6 +19,7 @@ import static org.jacpfx.api.util.ToolbarPosition.NORTH;
 /**
  * Created by Andy Moncsek on 13.12.13.
  * A JacpFX workbench.
+ *
  * @author <a href="mailto:amo.ahcp@gmail.com"> Andy Moncsek</a>
  */
 @Workbench(id = "id1", name = "workbench", perspectives = "id01")

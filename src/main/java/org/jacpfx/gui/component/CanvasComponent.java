@@ -76,6 +76,7 @@ public class CanvasComponent implements FXComponent {
         graphicsContext.stroke();
     }
 
+
     @Override
     public Node handle(Message<Event, Object> message) throws Exception {
         return null;
@@ -92,7 +93,7 @@ public class CanvasComponent implements FXComponent {
 
     @PreDestroy
     public void onDestroy() {
-        if(labelContainer==null || canvas==null) return;
+        if (labelContainer == null || canvas == null) return;
         labelContainer.prefHeightProperty().unbind();
         labelContainer.prefWidthProperty().unbind();
         canvas.heightProperty().unbind();
@@ -128,19 +129,22 @@ public class CanvasComponent implements FXComponent {
 
     private void initEventHandler(final Canvas canvas) {
         canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, (event) -> {
-            context.send(BaseConfig.getGlobalId(BaseConfig.DRAWING_PERSPECTIVE,BaseConfig.WEBSOCKET_COMPONENT), new CanvasPoint(event.getX(), event.getY(), CanvasPoint.Type.BEGIN));
+            context.send(BaseConfig.getGlobalId(BaseConfig.DRAWING_PERSPECTIVE, BaseConfig.WEBSOCKET_COMPONENT),
+                    new CanvasPoint(event.getX(), event.getY(), CanvasPoint.Type.BEGIN));
         }
         );
         canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, (event) -> {
-            context.send(BaseConfig.getGlobalId(BaseConfig.DRAWING_PERSPECTIVE,BaseConfig.WEBSOCKET_COMPONENT), new CanvasPoint(event.getX(), event.getY(), CanvasPoint.Type.DRAW));
+            context.send(BaseConfig.getGlobalId(BaseConfig.DRAWING_PERSPECTIVE, BaseConfig.WEBSOCKET_COMPONENT),
+                    new CanvasPoint(event.getX(), event.getY(), CanvasPoint.Type.DRAW));
         });
     }
 
     private void addClearButton(final FXComponentLayout layout) {
         final JACPToolBar registeredToolBar = layout.getRegisteredToolBar(ToolbarPosition.NORTH);
-        Button clear = new Button("clear");
-        clear.setOnMouseClicked(context.getEventHandler(BaseConfig.getGlobalId(BaseConfig.DRAWING_PERSPECTIVE,BaseConfig.WEBSOCKET_COMPONENT), new CanvasPoint(0, 0, CanvasPoint.Type.CLEAR)));
-        registeredToolBar.add(BaseConfig.getGlobalId(BaseConfig.DRAWING_PERSPECTIVE,BaseConfig.CANVAS_COMPONENT), clear);
+        final Button clear = new Button("clear");
+        clear.setOnMouseClicked(context.getEventHandler(BaseConfig.getGlobalId(BaseConfig.DRAWING_PERSPECTIVE, BaseConfig.WEBSOCKET_COMPONENT),
+                new CanvasPoint(0, 0, CanvasPoint.Type.CLEAR)));
+        registeredToolBar.add(BaseConfig.getGlobalId(BaseConfig.DRAWING_PERSPECTIVE, BaseConfig.CANVAS_COMPONENT), clear);
     }
 
 }

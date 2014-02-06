@@ -14,6 +14,6 @@ import static org.jacpfx.util.Serializer.deserialize;
 public class MessageUtil {
 
     public static <T> T getMessage(byte[] bytes, Class<T> clazz) throws IOException, ClassNotFoundException {
-                 return clazz.cast(deserialize(bytes));
+        return clazz.cast(deserialize(bytes));
     }
 }

@@ -85,12 +85,12 @@
     -fx-background-color: transparent;
 }
 
-.vsplitpane  *.vertical-grabber {
+.vsplitpane *.vertical-grabber {
     -fx-background-color: -fx-base;
     -fx-shape: "M0 0 L0 0 L0 5 L2 5 L2 0 L0 0 Z"; /* TODO NOT THE RIGHT L&F */
 }
 
-.vsplitpane  *.horizontal-grabber {
+.vsplitpane *.horizontal-grabber {
     -fx-background-color: -fx-base;
     -fx-shape: "M0 0 L0 0 L0 5 L2 5 L2 0 L0 0 Z"; /* TODO NOT THE RIGHT L&F */
 }
@@ -108,12 +108,12 @@
     -fx-background-insets: 0, 0 1 0 1;
 }
 
-.hsplitpane  *.vertical-grabber {
+.hsplitpane *.vertical-grabber {
     -fx-background-color: -fx-base;
     -fx-shape: "M0 0 L0 0 L0 5 L2 5 L2 0 L0 0 Z"; /* TODO NOT THE RIGHT L&F */
 }
 
-.hsplitpane  *.horizontal-grabber {
+.hsplitpane *.horizontal-grabber {
     -fx-background-color: -fx-base;
     -fx-shape: "M0 0 L0 0 L0 5 L2 5 L2 0 L0 0 Z"; /* TODO NOT THE RIGHT L&F */
 }

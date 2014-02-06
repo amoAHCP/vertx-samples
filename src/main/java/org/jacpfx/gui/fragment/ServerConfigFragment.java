@@ -5,13 +5,14 @@ import org.jacpfx.api.annotations.Resource;
 import org.jacpfx.api.annotations.fragment.Fragment;
 import org.jacpfx.api.fragment.Scope;
 import org.jacpfx.dto.FragmentNavigation;
+import org.jacpfx.gui.configuration.BaseConfig;
 import org.jacpfx.rcp.context.Context;
 
 /**
  * Created by Andy Moncsek on 06.02.14.
  * The main selection dialog.
  */
-@Fragment(id = "id1002",
+@Fragment(id = BaseConfig.SERVERCONFIG_FRAGMENT,
         viewLocation = "/fxml/ServerCofigFragment.fxml",
         resourceBundleLocation = "bundles.languageBundle",
         localeID = "en_US",
