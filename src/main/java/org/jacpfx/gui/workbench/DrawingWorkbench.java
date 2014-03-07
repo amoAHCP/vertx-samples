@@ -42,7 +42,7 @@ public class DrawingWorkbench implements FXWorkbench {
     @Override
     public void handleInitialLayout(Message<Event, Object> action, WorkbenchLayout<Node> layout, Stage stage) {
         this.stage = stage;
-        layout.setWorkbenchXYSize(1024, 768);
+        layout.setWorkbenchXYSize(640,480);
         layout.registerToolBars(NORTH);
         layout.setMenuEnabled(true);
     }

@@ -42,7 +42,7 @@ public class CanvasPoint implements Serializable {
     }
 
     public enum Type {
-        BEGIN, DRAW, CLEAR
+        BEGIN, DRAW, CLEAR, RELEASE
     }
 
 }

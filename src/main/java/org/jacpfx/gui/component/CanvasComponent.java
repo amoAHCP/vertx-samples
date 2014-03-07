@@ -23,6 +23,9 @@ import org.jacpfx.rcp.componentLayout.FXComponentLayout;
 import org.jacpfx.rcp.components.toolBar.JACPToolBar;
 import org.jacpfx.rcp.context.Context;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by Andy Moncsek on 16.12.13.
  * This Component contains a view with a JavaFX Canvas element.
@@ -43,33 +46,28 @@ public class CanvasComponent implements FXComponent {
     @FXML
     private VBox labelContainer;
     private
-    @Resource
-    Context context;
-
+    @Resource  Context context;
+    private GraphicsContext graphicsContext;
     @Override
     public Node postHandle(Node node, Message<Event, Object> message) throws Exception {
         if (message.isMessageBodyTypeOf(CanvasPoint.class)) {
-            CanvasPoint point = message.getTypedMessageBody(CanvasPoint.class);
-            drawPoint(point);
+            drawPoint(message.getTypedMessageBody(CanvasPoint.class));
         }
         return null;
     }
 
-    private void drawPoint(CanvasPoint point) {
-        final GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
+    private void drawPoint(final CanvasPoint point) {
         switch (point.getType()) {
             case BEGIN:
-                graphicsContext.beginPath();
-                graphicsContext.moveTo(point.getX(), point.getY());
+                beginPath(point.getX(),point.getY());
                 break;
             case DRAW:
                 graphicsContext.lineTo(point.getX(), point.getY());
                 break;
             case CLEAR:
-                final double height = canvas.getHeight();
-                final double width = canvas.getWidth();
-                graphicsContext.beginPath();
-                graphicsContext.clearRect(0, 0, width, height);
+                clearCanvas(canvas.getWidth(),canvas.getHeight());
+                break;
+            case RELEASE:
                 break;
             default:
         }
@@ -84,6 +82,7 @@ public class CanvasComponent implements FXComponent {
 
     @PostConstruct
     public void onStart(final FXComponentLayout layout) {
+        graphicsContext = canvas.getGraphicsContext2D();
         initBinding(root, canvas, labelContainer);
         initDraw(canvas.getGraphicsContext2D());
         initEventHandler(canvas);
@@ -139,6 +138,15 @@ public class CanvasComponent implements FXComponent {
         });
     }
 
+    private void beginPath(final double x, final double y) {
+        graphicsContext.beginPath();
+        graphicsContext.moveTo(x, y);
+    }
+
+    private void clearCanvas(final double width, final double height) {
+        graphicsContext.beginPath();
+        graphicsContext.clearRect(0, 0, width, height);
+    }
     private void addClearButton(final FXComponentLayout layout) {
         final JACPToolBar registeredToolBar = layout.getRegisteredToolBar(ToolbarPosition.NORTH);
         final Button clear = new Button("clear");

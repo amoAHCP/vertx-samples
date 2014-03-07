@@ -45,7 +45,5 @@ public class VertxComponent implements CallbackComponent {
                 1,
                 null,
                 null);
-        System.out.println("Verticle deployed");
-
     }
 }

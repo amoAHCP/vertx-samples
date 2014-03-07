@@ -21,7 +21,7 @@ public class RemoteDrawingServer extends Verticle {
         registerEventBusMessageHandler();
         registerWebsocketHandler(httpServer);
         httpServer.listen(PORT_NUMER);
-        System.out.println("started");
+        this.container.logger().info("started : " + this);
     }
 
     private HttpServer startServer() {
