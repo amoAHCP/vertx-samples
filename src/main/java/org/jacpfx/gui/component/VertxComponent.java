@@ -9,12 +9,16 @@ import org.jacpfx.gui.configuration.BaseConfig;
 import org.jacpfx.rcp.component.CallbackComponent;
 import org.jacpfx.rcp.context.Context;
 import org.jacpfx.server.RemoteDrawingServer;
+import org.vertx.java.core.AsyncResult;
+import org.vertx.java.core.Handler;
 import org.vertx.java.platform.PlatformLocator;
 import org.vertx.java.platform.PlatformManager;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Andy Moncsek on 06.02.14.
@@ -32,18 +36,20 @@ public class VertxComponent implements CallbackComponent {
         if (message.isMessageBodyTypeOf(ConnectionProperties.class)) {
             final ConnectionProperties prop = message.getTypedMessageBody(ConnectionProperties.class);
             RemoteDrawingServer.PORT_NUMER = Integer.valueOf(prop.getPort());
-            connect();
+            final CountDownLatch waitForDeployment = new CountDownLatch(1);
+            connect(waitForDeployment);
+            waitForDeployment.await(1000, TimeUnit.MILLISECONDS);
             context.send(BaseConfig.WEBSOCKET_COMPONENT, new ConnectionProperties("127.0.0.1", prop.getPort()));
         }
         return null;
     }
 
-    private void connect() throws MalformedURLException {
+    private void connect(final CountDownLatch waitForDeployment ) throws MalformedURLException {
         pm.deployVerticle("org.jacpfx.server.RemoteDrawingServer",
                 null,
                 new URL[]{new File(".").toURI().toURL()},
                 1,
                 null,
-                null);
+                (event) ->{if(event.succeeded())waitForDeployment.countDown();});
     }
 }
