@@ -48,7 +48,7 @@ public class VertxComponent implements CallbackComponent {
         pm.deployVerticle("org.jacpfx.server.RemoteDrawingServer",
                 null,
                 new URL[]{new File(".").toURI().toURL()},
-                1,
+                10,
                 null,
                 (event) ->{if(event.succeeded())waitForDeployment.countDown();});
     }

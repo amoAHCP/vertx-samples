@@ -2,6 +2,7 @@ package org.jacpfx.gui.component;
 
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
@@ -127,12 +128,12 @@ public class CanvasComponent implements FXComponent {
     }
 
     private void initEventHandler(final Canvas canvas) {
-        canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, (event) -> {
+        canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, (EventHandler<MouseEvent>)(event) -> {
             context.send(BaseConfig.getGlobalId(BaseConfig.DRAWING_PERSPECTIVE, BaseConfig.WEBSOCKET_COMPONENT),
                     new CanvasPoint(event.getX(), event.getY(), CanvasPoint.Type.BEGIN));
         }
         );
-        canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, (event) -> {
+        canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, (EventHandler<MouseEvent>)(event) -> {
             context.send(BaseConfig.getGlobalId(BaseConfig.DRAWING_PERSPECTIVE, BaseConfig.WEBSOCKET_COMPONENT),
                     new CanvasPoint(event.getX(), event.getY(), CanvasPoint.Type.DRAW));
         });

@@ -71,7 +71,7 @@ public class RemoteDrawingServer extends Verticle {
      * @param data
      */
     private void redirectWSMessageToBus(final Buffer data) {
-        vertx.eventBus().send("org.jacpfx.draw.message", data.getBytes());
+        vertx.eventBus().publish("org.jacpfx.draw.message", data.getBytes());
     }
 
 }
