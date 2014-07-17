@@ -9,8 +9,6 @@ import org.jacpfx.gui.configuration.BaseConfig;
 import org.jacpfx.rcp.component.CallbackComponent;
 import org.jacpfx.rcp.context.Context;
 import org.jacpfx.server.RemoteDrawingServer;
-import org.vertx.java.core.AsyncResult;
-import org.vertx.java.core.Handler;
 import org.vertx.java.platform.PlatformLocator;
 import org.vertx.java.platform.PlatformManager;
 
@@ -25,7 +23,7 @@ import java.util.concurrent.TimeUnit;
  * Start the vertx server
  */
 @Component(id = BaseConfig.VERTX_COMPONENT, name = "VertxComponent", active = false)
-public class VertxComponent implements CallbackComponent {
+public class VertxServerComponent implements CallbackComponent {
 
     @Resource
     private Context context;

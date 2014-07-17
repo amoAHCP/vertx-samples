@@ -2,7 +2,6 @@ package org.jacpfx.gui.component;
 
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
@@ -23,9 +22,6 @@ import org.jacpfx.rcp.component.FXComponent;
 import org.jacpfx.rcp.componentLayout.FXComponentLayout;
 import org.jacpfx.rcp.components.toolBar.JACPToolBar;
 import org.jacpfx.rcp.context.Context;
-
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Andy Moncsek on 16.12.13.
@@ -128,15 +124,14 @@ public class CanvasComponent implements FXComponent {
     }
 
     private void initEventHandler(final Canvas canvas) {
-        canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, (EventHandler<MouseEvent>)(event) -> {
+        canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, (event) ->
             context.send(BaseConfig.getGlobalId(BaseConfig.DRAWING_PERSPECTIVE, BaseConfig.WEBSOCKET_COMPONENT),
-                    new CanvasPoint(event.getX(), event.getY(), CanvasPoint.Type.BEGIN));
-        }
+                    new CanvasPoint(event.getX(), event.getY(), CanvasPoint.Type.BEGIN))
         );
-        canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, (EventHandler<MouseEvent>)(event) -> {
+        canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, (event) ->
             context.send(BaseConfig.getGlobalId(BaseConfig.DRAWING_PERSPECTIVE, BaseConfig.WEBSOCKET_COMPONENT),
-                    new CanvasPoint(event.getX(), event.getY(), CanvasPoint.Type.DRAW));
-        });
+                    new CanvasPoint(event.getX(), event.getY(), CanvasPoint.Type.DRAW))
+        );
     }
 
     private void beginPath(final double x, final double y) {
@@ -149,7 +144,7 @@ public class CanvasComponent implements FXComponent {
         graphicsContext.clearRect(0, 0, width, height);
     }
     private void addClearButton(final FXComponentLayout layout) {
-        final JACPToolBar registeredToolBar = layout.getRegisteredToolBar(ToolbarPosition.NORTH);
+        final JACPToolBar registeredToolBar = layout.getRegisteredToolBar(ToolbarPosition.WEST);
         final Button clear = new Button("clear");
         clear.setOnMouseClicked(context.getEventHandler(BaseConfig.getGlobalId(BaseConfig.DRAWING_PERSPECTIVE, BaseConfig.WEBSOCKET_COMPONENT),
                 new CanvasPoint(0, 0, CanvasPoint.Type.CLEAR)));

@@ -25,6 +25,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * This component communicates with the Vertx server through websockets
  * Created by Andy Moncsek on 16.12.13.
  */
 @Component(id = BaseConfig.WEBSOCKET_COMPONENT, name = "WebSocketComponent", active = false)
@@ -40,8 +41,7 @@ public class WebSocketComponent implements CallbackComponent {
             webSocket.writeBinaryFrame(new Buffer(Serializer.serialize(message.getMessageBody())));
 
         } else if (message.isMessageBodyTypeOf(ConnectionProperties.class)) {
-            final ConnectionProperties prop = message.getTypedMessageBody(ConnectionProperties.class);
-            createConnection(prop);
+            createConnection(message.getTypedMessageBody(ConnectionProperties.class));
         }
         return null;
     }

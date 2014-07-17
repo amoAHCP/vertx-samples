@@ -39,7 +39,7 @@ public class RemoteDrawingServer extends Verticle {
      */
     private void handleWSMessagesFromBus(final Message<byte[]> message) {
         repository.getWebSockets()
-                .parallelStream()
+                .stream()
                 .forEach(ws -> ws.writeBinaryFrame(new Buffer(message.body())));
     }
 

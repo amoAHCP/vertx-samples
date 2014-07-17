@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 /**
  * Created by Andy Moncsek on 16.12.13.
+ * This Class represents a coordinate on canvas
+ * @author Andy Moncsek
  */
 public class CanvasPoint implements Serializable {
     private static final long serialVersionUID = -3632448279678515949L;

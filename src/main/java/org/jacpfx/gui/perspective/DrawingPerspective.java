@@ -1,8 +1,6 @@
 package org.jacpfx.gui.perspective;
 
 import javafx.event.Event;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import org.jacpfx.api.annotations.Resource;
 import org.jacpfx.api.annotations.lifecycle.OnShow;
 import org.jacpfx.api.annotations.lifecycle.PostConstruct;
@@ -44,6 +42,7 @@ public class DrawingPerspective implements FXPerspective {
     @Override
     public void handlePerspective(Message<Event, Object> message, PerspectiveLayout perspectiveLayout) {
         if (message.isMessageBodyTypeOf(FragmentNavigation.class)) {
+            // coordinate between fragments
             FragmentNavigation navigation = message.getTypedMessageBody(FragmentNavigation.class);
             switch (navigation) {
                 case CONNECT:
@@ -89,10 +88,6 @@ public class DrawingPerspective implements FXPerspective {
     public void onStartPerspective(final PerspectiveLayout perspectiveLayout,
                                    final FXComponentLayout layout,
                                    final ResourceBundle resourceBundle) {
-        GridPane.setVgrow(perspectiveLayout.getRootComponent(),
-                Priority.ALWAYS);
-        GridPane.setHgrow(perspectiveLayout.getRootComponent(),
-                Priority.ALWAYS);
         perspectiveLayout.registerTargetLayoutComponent("vMain", perspectiveLayout.getRootComponent());
         startConnectDialog();
 

@@ -23,6 +23,7 @@ public class ServerConfigFragment {
 
     @FXML
     public void createConnection() {
+
         context.send(FragmentNavigation.CREATE);
     }
 

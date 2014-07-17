@@ -15,7 +15,6 @@ import org.jacpfx.spring.launcher.AFXSpringJavaConfigLauncher;
  * @author <a href="mailto:amo.ahcp@gmail.com"> Andy Moncsek</a>
  */
 public class ApplicationMain extends AFXSpringJavaConfigLauncher {
-    public static final String[] STYLE_FILES = {"/styles/style_light.css", "/styles/style_dark.css"};
 
     public ApplicationMain() {
 
@@ -49,6 +48,5 @@ public class ApplicationMain extends AFXSpringJavaConfigLauncher {
     protected void postInit(Stage stage) {
         final Scene scene = stage.getScene();
         stage.getIcons().add(new Image("images/icons/JACP_512_512.png"));
-        scene.getStylesheets().add(STYLE_FILES[0]);
     }
 }
